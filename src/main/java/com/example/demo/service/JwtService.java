@@ -19,9 +19,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    @Value("${security.jwt.secret-key")
+    @Value("${security.jwt.secret-key}")
     private String secretKey;
-    @Value("${security.jwt.expiration-time")
+    @Value("${security.jwt.expiration-time}")
     private long jwtExpiration;
 
     /* extracting username from jwt token */
@@ -39,18 +39,18 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extracClaims, UserDetails userDetails) {
-         return buildToken(extracClaims, userDetails, jwtExpiration);
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
     public long getExpirationTime(){
         return jwtExpiration;
     }
 
-    private String buildToken(Map<String, Object> extracClaims, UserDetails userDetails, long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
-                .setClaims(extracClaims)
+                .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
